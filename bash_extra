@@ -1,0 +1,25 @@
+# additions to ~/.bashrc
+
+# custom prompt
+export PS1="\[\e[0;90m\]\W\[\e[00m\] "
+
+# ros environment
+if [ -f /opt/ros/noetic/setup.bash ]; then
+    source /opt/ros/noetic/setup.bash
+fi
+
+# aliases
+export TRASH="${HOME}/.local/share/Trash/files"
+if [ -f ~/.bash_aliases ]; then
+   source ~/.bash_aliases
+fi
+
+# extra paths
+extra_paths=(
+    "$HOME/Documents"
+    "$HOME/.bin"
+    "$HOME/.dotfiles/bin"
+)
+
+# append extra paths
+eval $(~/.macos-dotfiles/bin/append_paths "${extra_paths[@]}")
