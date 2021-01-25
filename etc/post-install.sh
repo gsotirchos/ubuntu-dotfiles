@@ -29,7 +29,6 @@ brightness_option=\
 nologo_option='\    Option         "NoLogo"'
 
 xorg_file="/etc/X11/xorg.conf"
-xorg_file="$HOME/afile"
 if (! grep -q "${brightness_option}" "${xorg_file}"); then
     sed "/${vendor_name}/a\
     ${brightness_option}\n${nologo_option}"\
