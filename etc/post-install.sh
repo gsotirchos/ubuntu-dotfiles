@@ -41,4 +41,7 @@ sudo mv xorg.tmp /etc/X11/xorg.conf
 # install some packages
 sudo apt update
 sudo apt full-upgrade
-sudo apt install tree vim-gtk3 xbacklight
+sudo apt install tree\
+    vim-gtk3 xbacklight\
+    exfat-fuse\
+    exfat-utils
