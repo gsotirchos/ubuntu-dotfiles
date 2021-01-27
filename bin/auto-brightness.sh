@@ -1,5 +1,6 @@
 #!/bin/bash
 
+xbacklight -set 50
 light_sensor="/sys/devices/platform/applesmc.768/light"
 previous_new_brightness=0
 cnt=0

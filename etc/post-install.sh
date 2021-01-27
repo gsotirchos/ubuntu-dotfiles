@@ -37,6 +37,9 @@ fi
 
 sudo mv xorg.tmp /etc/X11/xorg.conf
 
+# disable autostart bluetooth
+# TODO comment out line in /etc/bluetooth/main.conf
+
 # install some packages
 sudo apt update
 sudo apt full-upgrade
