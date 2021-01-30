@@ -1,23 +1,37 @@
 #!/bin/bash
 
-xbacklight -set 50
 light_sensor="/sys/devices/platform/applesmc.768/light"
 previous_new_brightness=0
 cnt=0
 
-while true; do
+get_new_brightness() {
     # get measurement from ambient light sensor
+    light_sensor="$1"
     light_measurement="$(cat "${light_sensor}")"
     light_measurement="${light_measurement#(}"
     light_measurement="${light_measurement%,*}"  # 0~255
     new_brightness=$((light_measurement/14*5 + 10))  # 10~100
-    #echo "new brightness: ${new_brightness}"
-    #echo "previous new brightness: ${previous_new_brightness}"
 
+    echo "${new_brightness}"
+}
+
+get_current_brightness() {
     # get current brightness level
     current_brightness="$(xbacklight -get)"
     current_brightness="${current_brightness%.*}" # 0~100
-    #echo "current brightness: ${current_brightness}"
+
+    echo "${current_brightness}"
+}
+
+# run once first
+new_brightness="$(get_new_brightness ${light_sensor})"
+xbacklight -set "${new_brightness}"
+
+while true; do
+    new_brightness="$(get_new_brightness "${light_sensor}")"
+    current_brightness="$(get_current_brightness)"
+    echo "new brightness: ${new_brightness}"
+    echo "current brightness: ${current_brightness}"
 
     # if new brightness level is different from current
     if (((new_brightness - current_brightness)/10)); then
@@ -40,7 +54,9 @@ while true; do
         previous_new_brightness=0
         cnt=0
     fi
-    #echo "counter: ${cnt}"
+
+    echo "previous new brightness: ${previous_new_brightness}"
+    echo "counter: ${cnt}"
 
     sleep 1
 done
