@@ -1,0 +1,14 @@
+# uninstall shim
+sudo apt purge shim shim-signed
+
+# remove shimx64.efi
+sudo rm /boot/efi/EFI/ubuntu/shimx64.efi
+
+# reinstall grup
+sudo grub-install /dev/sda
+
+# check changes (should be \EFI\ubuntu\grubx64.efi)
+efibootmgr -v
+
+# remove older entries if needed
+sudo efibootmgr -Bb FFFF

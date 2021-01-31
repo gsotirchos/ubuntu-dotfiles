@@ -17,7 +17,7 @@ sudo apt-get install broadcom-sta-dkms
 sudo apt-get install broadcom-sta-common
 
 # generate nvidia xorg config file (installed driver)
-if [[ ! -f /etc/X11/xorg.conf ]]; then
+if [[ ! -s /etc/X11/xorg.conf ]]; then
     echo "- Created /etc/X11/xorg.conf"
     sudo nvidia-xconfig
 fi
