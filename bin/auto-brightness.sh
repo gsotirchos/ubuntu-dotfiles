@@ -10,9 +10,16 @@ get_new_brightness() {
     light_measurement="$(cat "${light_sensor}")"
     light_measurement="${light_measurement#(}"
     light_measurement="${light_measurement%,*}"  # 0~255
-    new_brightness=$((light_measurement/14*5 + 10))  # 10~100
+    #new_brightness=$((light_measurement/14*5 + 10))  # 10~100
 
-    echo "${new_brightness}"
+    min="0.1"
+    range="$(echo "1 - ${min}" | bc)"
+    new_brightness="$(echo\
+     "100 + ${range}*100*l((${min}*255/${range} + ${light_measurement})/\
+     (255/${range}))/l(10)"\
+     | bc -l)"  # 10~100 logarithmic
+
+    echo "$(printf %.$2f $(echo "${new_brightness}"))"
 }
 
 get_current_brightness() {
