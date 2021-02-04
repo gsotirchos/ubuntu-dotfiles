@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
 
 myfun() {
-    min="0.1"
+    min="0.2"
     range="$(echo "1 - ${min}" | bc)"
     result="$(echo\
-        "100 + ${range}*100*l((${min}*255/${range} + $1)/\
-        (255/${range}))/l(10)"\
+        "100 + ${range}*100*l(1/10 + $1/10*${range}/(${min}*255))/l(10)"\
         | bc -l)"
 
     echo "$(printf %.$2f $(echo "${result}"))"

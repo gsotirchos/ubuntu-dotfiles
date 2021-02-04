@@ -1,3 +1,5 @@
+# vim: set syntax=sh:
+
 # uninstall shim
 sudo apt purge shim shim-signed
 

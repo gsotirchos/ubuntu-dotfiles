@@ -12,12 +12,12 @@ get_new_brightness() {
     light_measurement="${light_measurement%,*}"  # 0~255
     #new_brightness=$((light_measurement/14*5 + 10))  # 10~100
 
-    min="0.1"
+    min="0.20"
     range="$(echo "1 - ${min}" | bc)"
     new_brightness="$(echo\
-     "100 + ${range}*100*l((${min}*255/${range} + ${light_measurement})/\
-     (255/${range}))/l(10)"\
-     | bc -l)"  # 10~100 logarithmic
+        "100 + ${range}*100*l(1/10 + ${light_measurement}/10*${range}/\
+        (${min}*255))/l(10)"\
+        | bc -l)"  # $min~100 logarithmic
 
     echo "$(printf %.$2f $(echo "${new_brightness}"))"
 }
