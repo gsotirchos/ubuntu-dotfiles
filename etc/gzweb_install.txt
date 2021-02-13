@@ -21,7 +21,7 @@ nvm use 8
 
 # build gzweb:
 cd ~; git clone https://github.com/osrf/gzweb
-cd ~/gzweb; git checkout gzweb_1.4.1
+cd gzweb; git checkout gzweb_1.4.1
 source /usr/share/gazebo/setup.sh
 npm run deploy --- -m
 
@@ -30,7 +30,7 @@ npm run deploy --- -m
 gzserver
 
 # and gzweb on the host computer:
-cd ~/gzweb; npm start
+cd ~/gzweb; nvm use 8; npm start
 
 # on a browser on any machine in the network open:
 http://<host-computer-ip>:8080
