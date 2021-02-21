@@ -1,15 +1,26 @@
 # additions to ~/.bashrc
 
-# custom prompt
-export PS1="\[\e[0;90m\]\h::\W\[\e[00m\] "
+# check if this is a ssh session
+if [ -n "${SSH_CLIENT}" ] || [ -n "${SSH_TTY}" ]; then
+  export SESSION_TYPE="remote_ssh"
+else
+  case $(ps -o comm= -p $PPID) in
+    sshd|*/sshd) export SESSION_TYPE="remote_ssh";;
+  esac
+fi
 
 # enable display on ssh connections
-if [[ -n ${SSH_CONNECTION} ]]; then
+if [[ "${SESSION_TYPE}" == "remote_ssh" ]]; then
     export DISPLAY=:0
 fi
 
 # iMac's local ip
 imac="192.168.1.1"
+
+# custom prompt
+if [ -f ~/.bash_prompt ]; then
+   source ~/.bash_prompt
+fi
 
 # ros environment
 if [[ -f /opt/ros/noetic/setup.bash ]]; then
