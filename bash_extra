@@ -1,12 +1,15 @@
 # additions to ~/.bashrc
 
 # custom prompt
-export PS1="\[\e[0;90m\]\W\[\e[00m\] "
+export PS1="\[\e[0;90m\]\h::\W\[\e[00m\] "
 
 # enable display on ssh connections
 if [[ -n ${SSH_CONNECTION} ]]; then
     export DISPLAY=:0
 fi
+
+# iMac's local ip
+imac="192.168.1.1"
 
 # ros environment
 if [[ -f /opt/ros/noetic/setup.bash ]]; then
