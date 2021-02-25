@@ -11,6 +11,7 @@ MACOS_DOTFILES=~/.macos-dotfiles
 mkdir -vp ~/.vim/undo
 mkdir -vp ~/.vim/spell
 mkdir -vp ~/.config/autostart
+touch ~/.hushlogin
 
 # make soft symlinks
 echo "- Symlinking dotfiles (${DOTFILES})"
