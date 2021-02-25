@@ -24,7 +24,7 @@ get_new_brightness() {
 
 get_current_brightness() {
     # get current brightness level
-    current_brightness="$(xbacklight -get)"
+    current_brightness="$(light -G)"
     current_brightness="${current_brightness%.*}" # 0~100
 
     echo "${current_brightness}"
@@ -32,7 +32,7 @@ get_current_brightness() {
 
 # run once first
 new_brightness="$(get_new_brightness ${light_sensor})"
-xbacklight -set "${new_brightness}"
+light -S "${new_brightness}"
 
 while true; do
     new_brightness="$(get_new_brightness "${light_sensor}")"
@@ -47,7 +47,7 @@ while true; do
             # if this has been happening for 4 seconds
             if [[ ${cnt} == 4 ]]; then
                 # adjust screen brightness
-                xbacklight -set "${new_brightness}"
+                light -S "${new_brightness}"
                 previous_new_brightness=0
                 cnt=0
                 continue
