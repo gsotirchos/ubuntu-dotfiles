@@ -1,10 +1,10 @@
-#!/usr/bin/bash 
+#!/usr/bin/bash
 
 # dotfiles path
 DOTFILES=$(\
     builtin cd "$(\
-    dirname "$(readlink -f "${BASH_SOURCE[0]}")")"\
-    > /dev/null && pwd)
+    dirname "$(readlink -f "${BASH_SOURCE[0]}")"
+    )" > /dev/null && pwd)
 MACOS_DOTFILES=~/.macos-dotfiles
 
 # prepare folders
@@ -15,7 +15,7 @@ touch ~/.hushlogin
 
 # make soft symlinks
 echo "- Symlinking dotfiles (${DOTFILES})"
-"${MACOS_DOTFILES}"/bin/ln_dotfiles          ${DOTFILES}
+"${MACOS_DOTFILES}"/bin/ln_dotfiles "${DOTFILES}"
 ln -sfv "${MACOS_DOTFILES}"/inputrc          ~/.inputrc
 ln -sfv "${MACOS_DOTFILES}"/bash_aliases     ~/.bash_aliases
 ln -sfv "${MACOS_DOTFILES}"/bash_prompt      ~/.bash_prompt
@@ -29,3 +29,7 @@ echo "- Enable bitmap fonts & reconfigure fontconfig"
 sudo rm /etc/fonts/conf.d/70-no-bitmaps.conf
 sudo ln -sfv /etc/fonts/conf.avail/70-yes-bitmaps.conf /etc/fonts/conf.d
 sudo dpkg-reconfigure fontconfig
+
+# setup julia
+echo -e "\n- Setting up Julia"
+"${MACOS_DOTFILES}"/julia/setup-julia.sh
