@@ -14,3 +14,9 @@ efibootmgr -v
 
 # remove older entries if needed
 sudo efibootmgr -Bb FFFF
+
+# remove delay
+sudo efibootmgr -t 0
+
+# update grub
+sudo update-grub

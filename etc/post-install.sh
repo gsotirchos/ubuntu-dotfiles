@@ -55,9 +55,11 @@ echo "============================================================="
 sudo apt -y update
 sudo apt -y full-upgrade
 sudo apt -y dist-upgrade
-sudo apt -y install tree\
+sudo apt -y install\
+    tree\
     vim-gtk3\
     #xbacklight\
     light\
     exfat-fuse\
     exfat-utils
+    openssh-server
