@@ -29,6 +29,7 @@ fi
 
 # aliases
 export TRASH="${HOME}/.local/share/Trash/files"
+mkdir -p "${TRASH}"
 if [[ -f ~/.bash_aliases ]]; then
    source ~/.bash_aliases
 fi
