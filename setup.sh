@@ -5,7 +5,15 @@ DOTFILES=$(\
     builtin cd "$(\
     dirname "$(readlink -f "${BASH_SOURCE[0]}")"
     )" > /dev/null && pwd)
+
+# macos dotfiles path
 MACOS_DOTFILES=~/.macos-dotfiles
+if [[ ! -d "${MACOS_DOTFILES}" ]] \
+	|| [[ -z "$( ls -A ${MACOS_DOTFILES})" ]]; then
+    echo "- Couldn't locate ~./macos-dotfiles folder, cloning..."
+    git clone https://github.com/7555G/macos-dotfiles ${MACOS_DOTFILES}
+    exit
+fi
 
 # prepare folders
 mkdir -vp ~/.vim/undo
@@ -31,5 +39,7 @@ sudo ln -sfv /etc/fonts/conf.avail/70-yes-bitmaps.conf /etc/fonts/conf.d
 sudo dpkg-reconfigure fontconfig
 
 # setup julia
-echo -e "\n- Setting up Julia"
-"${MACOS_DOTFILES}"/julia/setup-julia.sh
+if command -v "julia" &> /dev/null; then
+    echo -e "\n- Setting up Julia"
+    "${MACOS_DOTFILES}"/julia/setup-julia.sh
+fi
