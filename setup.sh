@@ -22,6 +22,7 @@ fi
 mkdir -vp ~/.vim/undo
 mkdir -vp ~/.vim/spell
 mkdir -vp ~/.config/autostart
+mkdir -vp ~/.local/share/fonts
 touch ~/.hushlogin
 
 # make soft symlinks
