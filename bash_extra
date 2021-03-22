@@ -14,8 +14,8 @@ if [[ "${SESSION_TYPE}" == "remote_ssh" ]]; then
     export DISPLAY=:0
 fi
 
-# iMac's local ip
-imac="192.168.1.1"
+# MacBookAir's local ip
+macbookair="192.168.1.1"
 
 # custom prompt
 if [ -f ~/.bash_prompt ]; then

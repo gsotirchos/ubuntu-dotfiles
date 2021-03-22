@@ -28,3 +28,10 @@ sudo gdisk
 x  # expert
 n  # create a new protective MBR
 w  # write table to disk and exit (accept with "y")
+# now it should be something like this:
+#       ...
+# MBR: protective
+# BSD: not present
+# APM: not present
+# GPT: present
+#       ...
