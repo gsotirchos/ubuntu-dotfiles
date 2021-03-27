@@ -1,4 +1,4 @@
 [Desktop Entry]
 Name=auto-brightness
-Exec=bash -c "source ~/.dotfiles/bin/auto-brightness.sh"
+Exec=bash -c "~/.dotfiles/bin/auto-brightness"
 Type=Application
