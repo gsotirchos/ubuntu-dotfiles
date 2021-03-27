@@ -1,14 +1,40 @@
 #!/bin/bash
 
-light_sensor="/sys/devices/platform/applesmc.768/light"
-brightness_device=$(light -L | grep acpi_video0)
-previous_new_brightness=0
-cnt=0
+# get display brightness level
+get_brightness() {
+    connector="$1"
 
-get_new_brightness() {
+    if [[ ${connector} == "DP-3" ]]; then
+        # get internal display brightness
+        brightness_device=$(light -L | grep acpi_video0)
+        brightness_value="$(light -G -s ${brightness_device})"
+        brightness_value="${brightness_value%.*}" # 0~100
+    #else
+    #    TODO: LG Ultrafine
+    fi
+
+    echo "${brightness_value}"
+}
+
+# set display brightness
+set_brightness() {
+    connector="$1"
+    brightness_value="$2"
+
+    if [[ ${connector} == "DP-3" ]]; then
+        # set internal display brightness
+        brightness_device=$(light -L | grep acpi_video0)
+        light -S "${brightness_value}" -s ${brightness_device}
+    #else
+    #    TODO: LG Ultrafine
+    fi
+}
+
+# calculate new brightness according to light measurement
+calculate_new_brightness() {
     # get measurement from ambient light sensor
-    light_sensor="$1"
-    light_measurement="$(cat "${light_sensor}")"
+    LIGHT_SENSOR="$1"
+    light_measurement="$(cat "${LIGHT_SENSOR}")"
     light_measurement="${light_measurement#(}"
     light_measurement="${light_measurement%,*}"  # 0~255
     #new_brightness=$((light_measurement/14*5 + 10))  # 10~100
@@ -23,51 +49,58 @@ get_new_brightness() {
     echo "$(printf %.$2f $(echo "${new_brightness}"))"
 }
 
-get_current_brightness() {
-    # get current brightness level
-    #current_brightness="$(xbacklight -get)"
-    current_brightness="$(light -G -s ${brightness_device})"
-    current_brightness="${current_brightness%.*}" # 0~100
+main () {
+    MAX_CNT=4
+    SLEEP_DELAY=1
+    LIGHT_SENSOR="/sys/devices/platform/applesmc.768/light"
+    previous_new_brightness=0
+    cnt=0
 
-    echo "${current_brightness}"
+    # get primary display connector
+    primary_display="$(xrandr --query | grep "primary")"
+    connector="${primary_display% connected*}"
+
+    # run once first
+    new_brightness="$(calculate_new_brightness ${LIGHT_SENSOR})"
+    set_brightness "${connector}" "${new_brightness}"
+
+    while true; do
+        new_brightness="$(calculate_new_brightness "${LIGHT_SENSOR}")"
+        current_brightness="$(get_brightness "${connector}")"
+
+        echo "new brightness: ${new_brightness}"
+        echo "current brightness: ${current_brightness}"
+
+        # if new brightness level is different from current
+        if (((new_brightness - current_brightness)/10)); then
+            # if this new brithtness level is the same as previously
+            if ! (((new_brightness - previous_new_brightness)/10)); then
+                # if this has been happening for max loops
+                if [[ ${cnt} == ${MAX_CNT} ]]; then
+                    # adjust screen brightness
+                    set_brightness "${connector}" "${new_brightness}"
+
+                    # reset counter
+                    previous_new_brightness=0
+                    cnt=0
+                    continue
+                fi
+            fi
+
+            # remember this new brightness value
+            previous_new_brightness="${new_brightness}"
+            cnt=$((cnt + 1))
+        else
+            # reset counter
+            previous_new_brightness=0
+            cnt=0
+        fi
+
+        echo "previous new brightness: ${previous_new_brightness}"
+        echo "counter: ${cnt}"
+
+        sleep ${SLEEP_DELAY}
+    done
 }
 
-# run once first
-new_brightness="$(get_new_brightness ${light_sensor})"
-#xbacklight -set "${new_brightness}"
-light -S "${new_brightness}" -s ${brightness_device}
-
-while true; do
-    new_brightness="$(get_new_brightness "${light_sensor}")"
-    current_brightness="$(get_current_brightness)"
-    echo "new brightness: ${new_brightness}"
-    echo "current brightness: ${current_brightness}"
-
-    # if new brightness level is different from current
-    if (((new_brightness - current_brightness)/10)); then
-        # if this new brithtness level is the same as previously
-        if ! (((new_brightness - previous_new_brightness)/10)); then
-            # if this has been happening for 4 seconds
-            if [[ ${cnt} == 4 ]]; then
-                # adjust screen brightness
-                #xbacklight -set "${new_brightness}"
-                light -S "${new_brightness}" -s ${brightness_device}
-                previous_new_brightness=0
-                cnt=0
-                continue
-            fi
-        fi
-        # remember this new brightness
-        previous_new_brightness="${new_brightness}"
-        cnt=$((cnt + 1))
-    else
-        # reset counter
-        previous_new_brightness=0
-        cnt=0
-    fi
-
-    echo "previous new brightness: ${previous_new_brightness}"
-    echo "counter: ${cnt}"
-
-    sleep 1
-done
+main
