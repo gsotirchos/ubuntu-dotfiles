@@ -1,5 +1,8 @@
 # additions to ~/.bashrc
 
+# instantly append to history every command
+export PROMPT_COMMAND="history -a"
+
 # check if this is a ssh session
 if [ -n "${SSH_CLIENT}" ] || [ -n "${SSH_TTY}" ]; then
   export SESSION_TYPE="remote_ssh"
@@ -14,8 +17,9 @@ if [[ "${SESSION_TYPE}" == "remote_ssh" ]]; then
     export DISPLAY=:0
 fi
 
-# MacBookAir's local ip
-macbookair="192.168.1.1"
+# local ip shortcuts
+export macbookair="192.168.1.1"
+export npower_pi="npower@192.168.1.20"
 
 # custom prompt
 if [ -f ~/.bash_prompt ]; then
@@ -27,13 +31,6 @@ if [[ -f /opt/ros/noetic/setup.bash ]]; then
     source /opt/ros/noetic/setup.bash
 fi
 
-# aliases
-export TRASH="${HOME}/.local/share/Trash/files"
-mkdir -p "${TRASH}"
-if [[ -f ~/.bash_aliases ]]; then
-   source ~/.bash_aliases
-fi
-
 # extra paths
 extra_paths=(
     "$HOME/Documents"
@@ -43,3 +40,10 @@ extra_paths=(
 
 # append extra paths
 eval $(~/.macos-dotfiles/bin/append_paths "${extra_paths[@]}")
+
+# aliases
+export TRASH="${HOME}/.local/share/Trash/files"
+mkdir -p "${TRASH}"
+if [[ -f ~/.bash_aliases ]]; then
+   source ~/.bash_aliases
+fi
