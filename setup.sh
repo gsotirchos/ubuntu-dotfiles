@@ -6,7 +6,7 @@ NORMAL_COLOR='\033[0m'
 # dotfiles path
 DOTFILES=$(\
     builtin cd "$(\
-    dirname "$(readlink -f "${BASH_SOURCE[0]}")"
+        dirname "$(readlink -f "${BASH_SOURCE[0]}")"
     )" > /dev/null && pwd)
 
 # macos dotfiles path
@@ -21,6 +21,8 @@ fi
 # prepare folders
 mkdir -vp ~/.vim/undo
 mkdir -vp ~/.vim/spell
+mkdir -vp ~/.vim/words
+mkdir -vp ~/.config/gtk-3.0/gtk.css
 mkdir -vp ~/.config/autostart
 mkdir -vp ~/.local/share/fonts
 touch ~/.hushlogin
@@ -37,6 +39,7 @@ ln -sfv "${DOTFILES}"/config/gtk-3.0/gtk.css ~/.config/gtk-3.0/gtk.css
 ln -sfv "${DOTFILES}"/config/autostart/*     ~/.config/autostart
 ln -sfv "${DOTFILES}"/fonts/*/*.otb          ~/.local/share/fonts
 
+# enable bitmap fonts
 echo -e "${BRIGHT_COLOR}- Enable bitmap fonts & reconfigure fontconfig${NORMAL_COLOR}"
 sudo rm /etc/fonts/conf.d/70-no-bitmaps.conf
 sudo ln -sfv /etc/fonts/conf.avail/70-yes-bitmaps.conf /etc/fonts/conf.d
@@ -55,7 +58,7 @@ if command -v "julia" &> /dev/null; then
     "${MACOS_DOTFILES}"/julia/setup-julia.sh
 fi
 
-echo -e "${BRIGHT_COLOR}- Don't forget to append the following in ~/.bashrc:
+echo -e "${BRIGHT_COLOR}- Don't forget to append the following to ~/.bashrc:
 if [[ -f ~/.bash_extra ]]; then
     . ~/.bash_extra
 fi${NORMAL_COLOR}"
