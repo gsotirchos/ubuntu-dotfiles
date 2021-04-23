@@ -17,29 +17,31 @@ if [[ "${SESSION_TYPE}" == "remote_ssh" ]]; then
     export DISPLAY=:0
 fi
 
-# local ip shortcuts
-export macbookair="192.168.1.1"
-export npower_pi="npower@192.168.1.20"
-
 # custom prompt
 if [ -f ~/.bash_prompt ]; then
    source ~/.bash_prompt
 fi
+
+# local ip shortcuts
+export macbookair="192.168.1.1"
+export npower_pi="npower@192.168.1.20"
+
+# use clang and Ninja with CMake
+export CC="/opt/homebrew/opt/llvm/bin/clang"
+export CXX="${CC}++"
+export CMAKE_GENERATOR="Ninja"
+
+# gtest environment
+export CPLUS_INCLUDE_PATH="/usr/local/include"
+export LIBRARY_PATH="/usr/local/lib"
 
 # ros environment
 if [[ -f /opt/ros/noetic/setup.bash ]]; then
     source /opt/ros/noetic/setup.bash
 fi
 
-# extra paths
-extra_paths=(
-    "$HOME/Documents"
-    "$HOME/.bin"
-    "$HOME/.dotfiles/bin"
-)
-
 # append extra paths
-eval $(~/.macos-dotfiles/bin/append_paths "${extra_paths[@]}")
+export PATH="$(~/.macos-dotfiles/bin/append_paths ${PATH} ~/.dotfiles/extra_paths.txt)"
 
 # aliases
 export TRASH="${HOME}/.local/share/Trash/files"
