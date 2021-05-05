@@ -26,22 +26,18 @@ fi
 export macbookair="192.168.1.1"
 export npower_pi="npower@192.168.1.20"
 
-# use clang and Ninja with CMake
-export CC="/opt/homebrew/opt/llvm/bin/clang"
-export CXX="${CC}++"
-export CMAKE_GENERATOR="Ninja"
-
-# gtest environment
-export CPLUS_INCLUDE_PATH="/usr/local/include"
-export LIBRARY_PATH="/usr/local/lib"
-
 # ros environment
 if [[ -f /opt/ros/noetic/setup.bash ]]; then
     source /opt/ros/noetic/setup.bash
 fi
 
 # append extra paths
-export PATH="$(~/.macos-dotfiles/bin/append_paths ${PATH} ~/.dotfiles/extra_paths.txt)"
+source ~/.macos-dotfiles/bin/append_paths ~/.macos-dotfiles/extra_paths
+
+# use clang and Ninja with CMake
+export CC="$(which clang)"
+export CXX="${CC}++"
+export CMAKE_GENERATOR="Ninja"
 
 # aliases
 export TRASH="${HOME}/.local/share/Trash/files"

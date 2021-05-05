@@ -1,3 +1,0 @@
-$HOME/Documents
-$HOME/.bin
-$HOME/.dotfiles/bin
