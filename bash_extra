@@ -4,7 +4,7 @@
 export PROMPT_COMMAND="history -a"
 
 # check if this is a ssh session
-if [ -n "${SSH_CLIENT}" ] || [ -n "${SSH_TTY}" ]; then
+if [[ -n "${SSH_CLIENT}" ]] || [[ -n "${SSH_TTY}" ]]; then
   export SESSION_TYPE="remote_ssh"
 else
   case $(ps -o comm= -p $PPID) in
@@ -18,7 +18,7 @@ if [[ "${SESSION_TYPE}" == "remote_ssh" ]]; then
 fi
 
 # custom prompt
-if [ -f ~/.bash_prompt ]; then
+if [[ -f ~/.bash_prompt ]]; then
    source ~/.bash_prompt
 fi
 
@@ -31,10 +31,15 @@ if [[ -f /opt/ros/noetic/setup.bash ]]; then
     source /opt/ros/noetic/setup.bash
 fi
 
+# conda initialization
+if [[ -f ~/.conda_init ]]; then
+    source ~/.conda_init
+fi
+
 # append extra paths
 source ~/.macos-dotfiles/bin/append_paths ~/.macos-dotfiles/extra_paths
 
-# use clang and Ninja with CMake
+# use clang and Ninja with CMake (AFTER EXTRA PATHS)
 export CC="$(which clang)"
 export CXX="${CC}++"
 export CMAKE_GENERATOR="Ninja"
