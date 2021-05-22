@@ -27,14 +27,16 @@ mkdir -vp ~/.config/autostart
 mkdir -vp ~/.local/share/fonts
 touch ~/.hushlogin
 
+# TODO: replace this mess with a submodule & symlinks
 # make soft symlinks
 echo -e "${BRIGHT_COLOR}- Symlinking dotfiles (${DOTFILES})${NORMAL_COLOR}"
-"${MACOS_DOTFILES}"/bin/ln_dotfiles "${DOTFILES}"
+"${MACOS_DOTFILES}"/bin/ln_dotfiles "${DOTFILES}" "${HOME}/."
 ln -sfv "${MACOS_DOTFILES}"/inputrc          ~/.inputrc
 ln -sfv "${MACOS_DOTFILES}"/bash_aliases     ~/.bash_aliases
 ln -sfv "${MACOS_DOTFILES}"/bash_prompt      ~/.bash_prompt
 ln -sfv "${MACOS_DOTFILES}"/vimrc            ~/.vimrc
 ln -sfv "${MACOS_DOTFILES}"/vim/*            ~/.vim
+ln -sfv "${MACOS_DOTFILES}"/condarc          ~/.condarc
 ln -sfv "${DOTFILES}"/config/gtk-3.0/gtk.css ~/.config/gtk-3.0/gtk.css
 ln -sfv "${DOTFILES}"/config/autostart/*     ~/.config/autostart
 ln -sfv "${DOTFILES}"/fonts/*/*.otb          ~/.local/share/fonts
