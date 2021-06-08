@@ -37,17 +37,29 @@ calculate_new_brightness() {
     light_measurement="$(cat "${LIGHT_SENSOR}")"
     light_measurement="${light_measurement#(}"
     light_measurement="${light_measurement%,*}"  # 0~255
-    #new_brightness=$((light_measurement/14*5 + 10))  # 10~100
 
-    if (( light_measurement <= 4 )); then
+    x1=2  # min measurement
+    x2=70  # max measurement
+    y1=15  # min brightness
+    y2=100  # max measurement
+
+    if (( light_measurement <= x1 )); then
         new_brightness=15
-    elif (( light_measurement >= 70 )); then
+    elif (( light_measurement >= x2 )); then
         new_brightness=100
     else
-        new_brightness="$(echo\
-            "-17 + 27.4*l(${light_measurement})"\
+        a="$(echo \
+            "(${y1} - ${y2}) / (l(${x1}) - l(${x2}))" \
             | bc -l\
-        )"  # $15~100 logarithmic
+        )"
+        b="$(echo \
+            "(${y2} * l(${x1}) - ${y1} * l(${x2})) / (l(${x1}) - l(${x2}))" \
+            | bc -l\
+        )"
+        new_brightness="$(echo \
+            "${a} * l(${light_measurement}) + ${b}" \
+            | bc -l\
+        )"  # y1~y2 logarithmic
     fi
 
     echo "$(printf %.$2f $(echo "${new_brightness}"))"
