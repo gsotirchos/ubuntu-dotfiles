@@ -21,7 +21,6 @@ fi
 # prepare folders
 mkdir -vp ~/.vim/undo
 mkdir -vp ~/.vim/spell
-mkdir -vp ~/.vim/words
 mkdir -vp ~/.config/gtk-3.0/gtk.css
 mkdir -vp ~/.config/autostart
 mkdir -vp ~/.local/share/fonts
