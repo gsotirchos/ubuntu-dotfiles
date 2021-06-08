@@ -32,6 +32,7 @@ touch ~/.hushlogin
 echo -e "${BR_TEXT}- Symlinking dotfiles (${DOTFILES})${DEF_TEXT}"
 "${MACOS_DOTFILES}"/bin/ln_dotfiles "${DOTFILES}" "${HOME}/."
 ln -sfv "${MACOS_DOTFILES}"/inputrc          ~/.inputrc
+ln -sfv "${MACOS_DOTFILES}"/bash_extra       ~/.bash_extra
 ln -sfv "${MACOS_DOTFILES}"/bash_aliases     ~/.bash_aliases
 ln -sfv "${MACOS_DOTFILES}"/bash_prompt      ~/.bash_prompt
 ln -sfv "${MACOS_DOTFILES}"/vim/*            ~/.vim
