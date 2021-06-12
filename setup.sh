@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-BR_TEXT='\033[0;97m'
+BR_TEXT='\033[1;97m'
 DEF_TEXT='\033[0m'
 
 # dotfiles path
@@ -29,16 +29,16 @@ touch ~/.hushlogin
 # make soft symlinks
 # TODO: replace this mess with a "macos-dotfiles submodule" & symlinks
 echo -e "${BR_TEXT}- Symlinking dotfiles (${DOTFILES})${DEF_TEXT}"
-"${MACOS_DOTFILES}"/bin/ln_dotfiles "${DOTFILES}" "${HOME}/."
-ln -sfv "${MACOS_DOTFILES}"/inputrc          ~/.inputrc
-ln -sfv "${MACOS_DOTFILES}"/bash_extra       ~/.bash_extra
-ln -sfv "${MACOS_DOTFILES}"/bash_aliases     ~/.bash_aliases
-ln -sfv "${MACOS_DOTFILES}"/bash_prompt      ~/.bash_prompt
-ln -sfv "${MACOS_DOTFILES}"/vim/*            ~/.vim
-ln -sfv "${MACOS_DOTFILES}"/condarc          ~/.condarc
-ln -sfv "${DOTFILES}"/config/gtk-3.0/gtk.css ~/.config/gtk-3.0/gtk.css
-ln -sfv "${DOTFILES}"/config/autostart/*     ~/.config/autostart
-ln -sfv "${DOTFILES}"/fonts/*/*.otb          ~/.local/share/fonts
+source "${MACOS_DOTFILES}/etc/ln_dotfiles.sh" "${DOTFILES}" "${HOME}/."
+ln -sfv "${MACOS_DOTFILES}/inputrc"          ~/.inputrc
+ln -sfv "${MACOS_DOTFILES}/bash_extra"       ~/.bash_extra
+ln -sfv "${MACOS_DOTFILES}/bash_aliases"     ~/.bash_aliases
+ln -sfv "${MACOS_DOTFILES}/bash_prompt"      ~/.bash_prompt
+ln -sfv "${MACOS_DOTFILES}/vim/"*            ~/.vim
+ln -sfv "${MACOS_DOTFILES}/condarc"          ~/.condarc
+ln -sfv "${DOTFILES}/config/gtk-3.0/gtk.css" ~/.config/gtk-3.0/gtk.css
+ln -sfv "${DOTFILES}/config/autostart/"*     ~/.config/autostart
+ln -sfv "${DOTFILES}/fonts/"*/*.otb          ~/.local/share/fonts
 
 # enable bitmap fonts
 echo -e "${BR_TEXT}- Enable bitmap fonts & reconfigure fontconfig${DEF_TEXT}"
