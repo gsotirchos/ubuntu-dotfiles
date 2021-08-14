@@ -1,3 +1,3 @@
-# vim: set ft=sh:
+# vim: set ft=bash:
 
 /opt/ros/${ROS_DISTRO}/include
