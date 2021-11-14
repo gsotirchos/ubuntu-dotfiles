@@ -7,7 +7,7 @@ myfun() {
         "100 + ${range}*100*l(1/10 + $1/10*${range}/(${min}*255))/l(10)"\
         | bc -l)"
 
-    echo "$(printf %.$2f $(echo "${result}"))"
+    printf "%.$2f" "${result}"
 }
 
 myfun "$1"

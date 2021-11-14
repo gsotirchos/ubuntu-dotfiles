@@ -7,7 +7,7 @@ get_brightness() {
     if [[ ${connector} == "DP-3" ]]; then
         # get internal display brightness
         brightness_device=$(light -L | grep acpi_video0)
-        brightness_value="$(light -G -s ${brightness_device})"
+        brightness_value="$(light -G -s "${brightness_device}")"
         brightness_value="${brightness_value%.*}" # 0~100
     #else
     #    TODO: LG Ultrafine
@@ -24,7 +24,7 @@ set_brightness() {
     if [[ ${connector} == "DP-3" ]]; then
         # set internal display brightness
         brightness_device=$(light -L | grep acpi_video0)
-        light -S "${brightness_value}" -s ${brightness_device}
+        light -S "${brightness_value}" -s "${brightness_device}"
     #else
     #    TODO: LG Ultrafine
     fi
@@ -62,7 +62,7 @@ calculate_new_brightness() {
         )"  # y1~y2 logarithmic
     fi
 
-    echo "$(printf %.$2f $(echo "${new_brightness}"))"
+    printf "%.$2f" "${new_brightness}"
 }
 
 main() {
@@ -92,7 +92,7 @@ main() {
             # if this new brithtness level is the same as previously
             if ! (((new_brightness - previous_new_brightness)/10)); then
                 # if this has been happening for max loops
-                if [[ ${cnt} == ${MAX_CNT} ]]; then
+                if [[ ${cnt} == "${MAX_CNT}" ]]; then
                     # adjust screen brightness
                     set_brightness "${connector}" "${new_brightness}"
 

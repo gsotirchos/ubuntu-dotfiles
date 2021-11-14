@@ -1,4 +1,5 @@
 #!/usr/bin/bash
+# shellcheck disable=SC1090,SC2155
 
 BR_TEXT='\033[1;97m'
 DEF_TEXT='\033[0m'
