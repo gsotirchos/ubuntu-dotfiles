@@ -7,7 +7,7 @@ get_brightness() {
     if [[ ${connector} == "DP-3" ]]; then
         # get internal display brightness
         brightness_device=$(light -L | grep acpi_video0)
-        brightness_value="$(light -G -s "${brightness_device}")"
+        brightness_value="$(light -G -s ${brightness_device})"
         brightness_value="${brightness_value%.*}" # 0~100
     #else
     #    TODO: LG Ultrafine
@@ -24,7 +24,7 @@ set_brightness() {
     if [[ ${connector} == "DP-3" ]]; then
         # set internal display brightness
         brightness_device=$(light -L | grep acpi_video0)
-        light -S "${brightness_value}" -s "${brightness_device}"
+        light -S "${brightness_value}" -s ${brightness_device}
     #else
     #    TODO: LG Ultrafine
     fi
