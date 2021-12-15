@@ -38,15 +38,15 @@ calculate_new_brightness() {
     light_measurement="${light_measurement#(}"
     light_measurement="${light_measurement%,*}"  # 0~255
 
-    x1=0.5  # min measurement
+    x1=2  # min measurement
     x2=70  # max measurement
-    y1=15  # min brightness
+    y1=10  # min brightness
     y2=100  # max measurement
 
     if (( $(echo "${light_measurement} <= ${x1}" | bc -l) )); then
-        new_brightness=15
+        new_brightness="${y1}"
     elif (( $(echo "${light_measurement} >= ${x2}" | bc -l) )); then
-        new_brightness=100
+        new_brightness="${y2}"
     else
         a="$(echo \
             "(${y1} - ${y2}) / (l(${x1}) - l(${x2}))" \
@@ -59,7 +59,7 @@ calculate_new_brightness() {
         new_brightness="$(echo \
             "${a} * l(${light_measurement}) + ${b}" \
             | bc -l\
-        )"  # y1~y2 logarithmic
+        )"  # y1...y2 logarithmically
     fi
 
     printf "%.$2f" "${new_brightness}"
