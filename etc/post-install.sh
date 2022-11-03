@@ -63,3 +63,8 @@ sudo apt -y install \
     exfat-fuse \
     exfat-utils \
     openssh-server
+#    shellcheck
+#    ccls
+#    cppcheck
+#    clang-format
+#    clangtidy
