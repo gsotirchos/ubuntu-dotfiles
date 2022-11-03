@@ -25,6 +25,7 @@ mkdir -vp ~/.config/autostart
 mkdir -vp ~/.local/share/fonts
 
 echo -e "${BR_TEXT}- Setting up dotfiles from ~./macos-dotfiles...${TEXT}"
+"${MACOS_DOTFILES}"/bin/setup_dotfiles
 
 # make soft symlinks
 # TODO: replace this mess with a "macos-dotfiles submodule" & symlinks
