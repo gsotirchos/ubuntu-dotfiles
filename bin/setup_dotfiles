@@ -26,6 +26,7 @@ mkdir -vp ~/.local/share/fonts
 
 echo -e "${BR_TEXT}- Setting up dotfiles from ~./macos-dotfiles...${TEXT}"
 "${MACOS_DOTFILES}"/bin/setup_dotfiles
+rm ~/.bash_profile
 
 # make soft symlinks
 # TODO: replace this mess with a "macos-dotfiles submodule" & symlinks
@@ -41,7 +42,7 @@ sudo rm /etc/fonts/conf.d/70-no-bitmaps.conf
 sudo ln -sfv /etc/fonts/conf.avail/70-yes-bitmaps.conf /etc/fonts/conf.d
 sudo dpkg-reconfigure fontconfig
 
-echo -e "${BR_TEXT}\n- Don't forget to append the following to ~/.bashrc${TEXT}:
-if [[ -f ~/.bash_extra ]]; then
-    source ~/.bash_extra
+echo -e "${BR_TEXT}\n- Don't forget to append the following to ~/.bash_profile${TEXT}:
+if [[ -f ~/.bashrc ]]; then
+    source ~/.bashrc
 fi"
