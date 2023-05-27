@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 main() {
     if [[ "${DISPLAY}" =~ :2[0-9]\.0 ]]; then
