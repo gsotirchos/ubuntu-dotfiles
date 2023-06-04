@@ -26,7 +26,7 @@ mkdir -vp ~/.local/share/fonts
 
 # TODO: replace this mess with a "macos-dotfiles submodule" & symlinks
 echo -e "${BR_TEXT}- Setting up dotfiles from ~./macos-dotfiles...${TEXT}"
-"${MACOS_DOTFILES}"/bin/setup_dotfiles
+source "${MACOS_DOTFILES}"/etc/setup_dotfiles.sh
 rm ~/.bash_profile
 rm -rf ~/.conda/env
 rm -rf ~/.conda/conda_init
