@@ -60,6 +60,7 @@ main() {
     mamba install -y --name editing \
         python-lsp-server \
         python-lsp-ruff \
+        autopep8 \
         cmake-format \
         mamba-bash-completion
 
