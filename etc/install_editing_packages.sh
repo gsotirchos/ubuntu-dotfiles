@@ -53,7 +53,7 @@ main() {
         ccls \
         cppcheck \
         python3-bashate
-    sudo snap install -y \
+    sudo snap install \
         bash-language-server \
         shellcheck \
         universal-ctags

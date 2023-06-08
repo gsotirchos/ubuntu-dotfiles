@@ -28,16 +28,16 @@ mkdir -vp ~/.local/share/fonts
 echo -e "${BR_TEXT}- Setting up dotfiles from ~./macos-dotfiles...${TEXT}"
 source "${MACOS_DOTFILES}"/etc/setup_dotfiles.sh
 rm ~/.bash_profile
-rm -rf ~/.conda/env
-rm -rf ~/.conda/conda_init
-rm -rf ~/.conda/condarc
+rm -f ~/.conda/conda_init
+rm -f ~/.conda/condarc
+rm -f ~/.conda/env
 
 # make soft symlinks
 echo -e "${BR_TEXT}- Symlinking dotfiles (${DOTFILES})${TEXT}"
 ln -sfv "${DOTFILES}"/config/gtk-3.0/gtk.css ~/.config/gtk-3.0/gtk.css
 ln -sfv "${DOTFILES}"/config/redshift.conf ~/.config/redshift.conf
-eval "ln -sfv "${DOTFILES}"/config/autostart/* ~/.config/autostart"
-eval "ln -sfv "${DOTFILES}"/fonts/*/*.otb ~/.local/share/fonts"
+ln -sfv "${DOTFILES}"/config/autostart/* ~/.config/autostart  # TODO: doesn't work
+ln -sfv "${DOTFILES}"/fonts/*/*.otb ~/.local/share/fonts  # TODO: doesn't work
 
 # enable bitmap fonts
 echo -e "${BR_TEXT}\n- Enable bitmap fonts & reconfigure fontconfig${TEXT}"
