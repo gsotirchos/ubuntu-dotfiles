@@ -8,7 +8,7 @@ main() {
     if ! [[ -d /opt/mambaforge ]]; then
         local CONDA_DIR="/opt/mambaforge"
 
-        echo -e "${BR_TEXT}- Setting up Mambaforge in ${CONDA_DIR}${TEXT}"
+        echo -e "${BR_TEXT}\n- Setting up Mambaforge in ${CONDA_DIR}${TEXT}"
         curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-$(uname)-$(uname -m).sh"
         sudo bash "Mambaforge-$(uname)-$(uname -m).sh" -b -p /opt/mambaforge
         sudo chmod -R o+w /opt/mambaforge # allow write access for all users
@@ -17,13 +17,12 @@ main() {
         source "${CONDA_DIR}/etc/profile.d/conda.sh"
         source "${CONDA_DIR}/etc/profile.d/mamba.sh"
         mamba update --name base --all -y
-        mamba install --name base mamba-bash-completion -y
-        mamba create --name editing -y
+        #mamba create --name editing -y
     fi
 
     # remove old clang
     if command -v "clang-10" &> /dev/null; then
-        echo -e "${BR_TEXT}- Removing clang-10 ${TEXT}"
+        echo -e "${BR_TEXT}\n- Removing clang-10 ${TEXT}"
         sudo apt remove -y \
             clang-10 \
             clang \
@@ -34,7 +33,7 @@ main() {
     # install latest clang
     local latest="17" # or whatever is currently the latest
     if ! command -v "clang-${latest}" &> /dev/null; then
-        echo -e "${BR_TEXT}- Installing clang-17 ${TEXT}"
+        echo -e "${BR_TEXT}\n- Installing clang-17 ${TEXT}"
         wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
         sudo add-apt-repository -y 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal main'
         sudo apt update
@@ -49,7 +48,7 @@ main() {
     fi
 
     # install other linters and fixers
-    echo -e "${BR_TEXT}- Installing some code linters and fixers${TEXT}"
+    echo -e "${BR_TEXT}\n- Installing some code linters and fixers${TEXT}"
     sudo apt install -y \
         gdb \
         ccls \
@@ -59,23 +58,25 @@ main() {
         bash-language-server \
         shellcheck \
         universal-ctags
-    mamba install -y --name editing \
+    #mamba install -y --name editing \
+    #    mamba-bash-completion \
+    pip install \
+        cmakelang \
         python-lsp-server \
         python-lsp-ruff \
         autopep8 \
-        cmake-format \
-        mamba-bash-completion
+        isort
 
     # (optional) install GCC7
-    echo -e "${BR_TEXT}- Installing GCC7${TEXT}"
+    echo -e "${BR_TEXT}\n- Installing GCC7${TEXT}"
     sudo apt install -y gcc-7 g++-7
 
     # install latest vim
-    echo -e "${BR_TEXT}- Installing the latest Vim${TEXT}"
+    echo -e "${BR_TEXT}\n- Installing the latest Vim${TEXT}"
     sudo add-apt-repository -y ppa:jonathonf/vim
     sudo apt update && sudo apt upgrade -y
 
-    echo -e "${BR_TEXT}- Finished${TEXT}"
+    echo -e "${BR_TEXT}\n- Finished${TEXT}"
 }
 
 main "$@"
