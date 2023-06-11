@@ -53,6 +53,7 @@ main() {
         gdb \
         ccls \
         cppcheck \
+        python3-pip \
         python3-bashate
     sudo snap install \
         bash-language-server \
