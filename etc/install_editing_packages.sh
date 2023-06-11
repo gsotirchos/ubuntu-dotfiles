@@ -6,14 +6,16 @@ main() {
 
     # install mambaforge
     if ! [[ -d /opt/mambaforge ]]; then
-        echo -e "${BR_TEXT}- Setting up Mambaforge ${TEXT}"
+        local CONDA_DIR="/opt/mambaforge"
+
+        echo -e "${BR_TEXT}- Setting up Mambaforge in ${CONDA_DIR}${TEXT}"
         curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-$(uname)-$(uname -m).sh"
         sudo bash "Mambaforge-$(uname)-$(uname -m).sh" -b -p /opt/mambaforge
-        sudo chmod -R o+w /opt/mambaforge  # allow write access for all users
+        sudo chmod -R o+w /opt/mambaforge # allow write access for all users
         rm "Mambaforge-$(uname)-$(uname -m).sh"
         export MAMBA_NO_BANNER=1
-        source /opt/mambaforge/etc/profile.d/conda.sh
-        source /opt/mambaforge/etc/profile.d/mamba.sh
+        source "${CONDA_DIR}/etc/profile.d/conda.sh"
+        source "${CONDA_DIR}/etc/profile.d/mamba.sh"
         mamba update --name base --all -y
         mamba install --name base mamba-bash-completion -y
         mamba create --name editing -y
@@ -30,10 +32,10 @@ main() {
     fi
 
     # install latest clang
-    local latest="17"  # or whatever is currently the latest
+    local latest="17" # or whatever is currently the latest
     if ! command -v "clang-${latest}" &> /dev/null; then
         echo -e "${BR_TEXT}- Installing clang-17 ${TEXT}"
-        wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+        wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
         sudo add-apt-repository -y 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal main'
         sudo apt update
         local tools=("clang" "clang-format" "clang-tidy")
