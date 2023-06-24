@@ -61,7 +61,7 @@ main() {
         universal-ctags
     #mamba install -y --name editing \
     #    mamba-bash-completion \
-    pip install \
+    sudo pip install \
         cmakelang \
         python-lsp-server \
         python-lsp-ruff \
