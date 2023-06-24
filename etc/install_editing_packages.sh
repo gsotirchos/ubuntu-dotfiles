@@ -73,6 +73,15 @@ main() {
         autopep8 \
         isort
 
+    if [[ "$(lsb_release -sc)" == "focal" ]] && [[ "$()" == "aarch64" ]]; then
+        # install shfmt manually on arm64 Focal
+        curl http://ports.ubuntu.com/pool/universe/s/shfmt/shfmt_3.4.3-1_arm64.deb --output temp.deb
+        sudo dpkg -i temp.deb
+        rm temp.deb
+    else
+        sudo apt install shfmt
+    fi
+
     # (optional) install GCC7
     echo -e "${BR_TEXT}\n- Installing GCC7${TEXT}"
     sudo apt install -y gcc-7 g++-7
