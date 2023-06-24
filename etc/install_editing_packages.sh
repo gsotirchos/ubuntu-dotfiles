@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 
 main() {
+    if [[ "$(lsb_release -si)" != "Ubuntu" ]]; then
+        echo "Failed: only source this in Ubuntu."
+        return 1
+    fi
+
     local BR_TEXT='\033[1;97m'
     local TEXT='\033[0m'
 
