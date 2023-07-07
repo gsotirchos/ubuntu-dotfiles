@@ -40,7 +40,7 @@ main() {
     if ! command -v "clang-${latest}" &> /dev/null; then
         echo -e "${BR_TEXT}\n- Installing clang-17 ${TEXT}"
         wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
-        sudo add-apt-repository -y 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal main'
+        sudo add-apt-repository -y "deb http://apt.llvm.org/$(lsb_release -sc) llvm-toolchain-$(lsb_release -sc) main"
         sudo apt update
         local tools=("clang" "clang-format" "clang-tidy")
         for tool in "${tools[@]}"; do
@@ -83,13 +83,16 @@ main() {
     fi
 
     # (optional) install GCC7
-    echo -e "${BR_TEXT}\n- Installing GCC7${TEXT}"
-    sudo apt install -y gcc-7 g++-7
+    if [[ "$(lsb_release -sc)" == "focal" ]] && [[ "$(arch)" == "aarch64" ]]; then
+        echo -e "${BR_TEXT}\n- Installing GCC7${TEXT}"
+        sudo apt install -y gcc-7 g++-7
+    fi
 
     # install latest vim
     echo -e "${BR_TEXT}\n- Installing the latest Vim${TEXT}"
     sudo add-apt-repository -y ppa:jonathonf/vim
     sudo apt update && sudo apt upgrade -y
+    sudo apt install -y vim
 
     echo -e "${BR_TEXT}\n- Finished${TEXT}"
 }
