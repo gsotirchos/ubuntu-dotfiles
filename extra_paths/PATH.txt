@@ -1,2 +1,4 @@
+# vim: set ft=yaml:
 ${HOME}/.bin
 ${HOME}/.dotfiles/bin
+/usr/lib/llvm*/bin
