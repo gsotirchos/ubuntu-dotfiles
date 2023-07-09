@@ -42,7 +42,7 @@ main() {
         wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
         sudo add-apt-repository -y "deb http://apt.llvm.org/$(lsb_release -sc) llvm-toolchain-$(lsb_release -sc) main"
         sudo apt update
-        local tools=("clang" "clang-format" "clang-tidy")
+        local tools=("clang" "clangd" "clang-format" "clang-tidy")
         for tool in "${tools[@]}"; do
             sudo apt install -y "${tool}-${latest}"
             echo -n "Adding symlink: "
@@ -56,7 +56,6 @@ main() {
     echo -e "${BR_TEXT}\n- Installing some code linters and fixers${TEXT}"
     sudo apt install -y \
         gdb \
-        ccls \
         cppcheck \
         python3-pip \
         python3-bashate
