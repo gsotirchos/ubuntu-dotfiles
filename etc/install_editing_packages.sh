@@ -78,7 +78,7 @@ main() {
         sudo dpkg -i temp.deb
         rm temp.deb
     else
-        sudo apt install shfmt
+        sudo snap install shfmt
     fi
 
     # (optional) install GCC7
