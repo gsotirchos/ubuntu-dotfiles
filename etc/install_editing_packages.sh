@@ -76,13 +76,13 @@ main() {
         # install shfmt manually on arm64 Focal
         curl http://ports.ubuntu.com/pool/universe/s/shfmt/shfmt_3.4.3-1_arm64.deb --output temp.deb
         sudo dpkg -i temp.deb
-        rm temp.deb
+        rm temp.debcode linters and fixers
     else
         sudo snap install shfmt
     fi
 
     # (optional) install GCC7
-    if [[ "$(lsb_release -sc)" == "focal" ]] && [[ "$(arch)" == "aarch64" ]]; then
+    if [[ "$(lsb_release -sc)" == "focal" ]]; then
         echo -e "${BR_TEXT}\n- Installing GCC7${TEXT}"
         sudo apt install -y gcc-7 g++-7
     fi
@@ -92,6 +92,12 @@ main() {
     sudo add-apt-repository -y ppa:jonathonf/vim
     sudo apt update && sudo apt upgrade -y
     sudo apt install -y vim
+
+    # install some other packages
+    echo -e "${BR_TEXT}\n- Installing some other packages${TEXT}"
+    sudo apt install -y \
+        tree \
+        jq
 
     echo -e "${BR_TEXT}\n- Finished${TEXT}"
 }
