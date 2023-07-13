@@ -35,8 +35,8 @@ main() {
     echo -e "${BR_TEXT}\n- Symlinking dotfiles (${DOTFILES})${TEXT}"
     ln -sfv "${DOTFILES}/config/gtk-3.0/gtk.css" ~/.config/gtk-3.0/gtk.css
     ln -sfv "${DOTFILES}/config/redshift.conf" ~/.config/redshift.conf
-    ln -sfv "${DOTFILES}/config/autostart/"* ~/.config/autostart  # TODO: doesn't work
-    ln -sfv "${DOTFILES}/fonts/"*/*.otb ~/.local/share/fonts  # TODO: doesn't work
+    ln -sfv "${DOTFILES}/config/autostart/"* ~/.config/autostart
+    ln -sfv "${DOTFILES}/fonts/"*/*.otb ~/.local/share/fonts
 
     # enable bitmap fonts
     echo -e "${BR_TEXT}\n- Enable bitmap fonts & reconfigure fontconfig${TEXT}"
