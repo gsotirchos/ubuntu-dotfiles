@@ -60,9 +60,8 @@ main() {
         python3-pip \
         python3-bashate
     sudo snap install bash-language-server --classic
-    sudo snap install \
-        shellcheck \
-        universal-ctags
+    sudo snap install shellcheck
+    sudo snap install universal-ctags
     #mamba install -y --name editing \
     #    mamba-bash-completion \
     sudo pip install \
