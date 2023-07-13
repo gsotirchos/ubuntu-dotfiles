@@ -1,2 +1,2 @@
 # vim: set ft=yaml:
-/opt/ros/${ROS_DISTRO}/lib
+#/opt/ros/${ROS_DISTRO}/lib
