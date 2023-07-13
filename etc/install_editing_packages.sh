@@ -59,8 +59,8 @@ main() {
         cppcheck \
         python3-pip \
         python3-bashate
+    sudo snap install bash-language-server --classic
     sudo snap install \
-        bash-language-server \
         shellcheck \
         universal-ctags
     #mamba install -y --name editing \
@@ -96,8 +96,10 @@ main() {
     # install some other packages
     echo -e "${BR_TEXT}\n- Installing some other packages${TEXT}"
     sudo apt install -y \
+        htop \
         tree \
-        jq
+        jq \
+        doxygen
 
     echo -e "${BR_TEXT}\n- Finished${TEXT}"
 }
