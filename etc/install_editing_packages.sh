@@ -90,7 +90,7 @@ main() {
     echo -e "${BR_TEXT}\n- Installing the latest Vim${TEXT}"
     sudo add-apt-repository -y ppa:jonathonf/vim
     sudo apt update && sudo apt upgrade -y
-    sudo apt install -y vim
+    sudo apt install -y vim-gtk  # has clipboard support
 
     # install some other packages
     echo -e "${BR_TEXT}\n- Installing some other packages${TEXT}"
