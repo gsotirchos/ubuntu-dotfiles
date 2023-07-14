@@ -1,4 +1,0 @@
-[Desktop Entry]
-Name=barrier-client
-Exec=bash -c "/usr/bin/barrierc -f --debug INFO --name TUD1001405 --enable-crypto --log /var/log/barrier.log 145.94.144.237:24800"
-Type=Application
