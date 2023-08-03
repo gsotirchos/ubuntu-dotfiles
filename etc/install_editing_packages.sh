@@ -35,20 +35,20 @@ main() {
             libclang-cpp10
     fi
 
-    # install latest clang
-    local latest="17" # or whatever is currently the latest
-    if ! command -v "clang-${latest}" &> /dev/null; then
+    # install a specific clang version
+    local version="17"
+    if ! command -v "clang-${version}" &> /dev/null; then
         echo -e "${BR_TEXT}\n- Installing clang-17 ${TEXT}"
         wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
-        sudo add-apt-repository -y "deb http://apt.llvm.org/$(lsb_release -sc) llvm-toolchain-$(lsb_release -sc) main"
+        sudo add-apt-repository -y "deb http://apt.llvm.org/$(lsb_release -sc) llvm-toolchain-$(lsb_release -sc)-${version} main"
         sudo apt update
         local tools=("clang" "clangd" "clang-format" "clang-tidy")
         for tool in "${tools[@]}"; do
-            sudo apt install -y "${tool}-${latest}"
+            sudo apt install -y "${tool}-${version}"
             echo -n "Adding symlink: "
             sudo cp -nv --no-dereference \
-                "$(which "${tool}-${latest}")" \
-                "$(dirname "$(which "${tool}-${latest}")")/${tool}"
+                "$(which "${tool}-${version}")" \
+                "$(dirname "$(which "${tool}-${version}")")/${tool}"
         done
     fi
 
@@ -90,7 +90,7 @@ main() {
     echo -e "${BR_TEXT}\n- Installing the latest Vim${TEXT}"
     sudo add-apt-repository -y ppa:jonathonf/vim
     sudo apt update && sudo apt upgrade -y
-    sudo apt install -y vim-gtk  # has clipboard support
+    sudo apt install -y vim-gtk # has clipboard support
 
     # install some other packages
     echo -e "${BR_TEXT}\n- Installing some other packages${TEXT}"
