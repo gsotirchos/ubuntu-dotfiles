@@ -11,10 +11,10 @@
 #echo "============================================================="
 #echo "- Install working wireless driver and remove the default"
 #echo "============================================================="
-#sudo apt purge bcmwl-kernel-source
-#sudo apt-get install -y broadcom-sta-source
-#sudo apt-get install -y broadcom-sta-dkms
-#sudo apt-get install -y broadcom-sta-common
+sudo apt purge bcmwl-kernel-source
+sudo apt-get install -y broadcom-sta-source
+sudo apt-get install -y broadcom-sta-dkms
+sudo apt-get install -y broadcom-sta-common
 
 ## use newer nvidia driver
 #echo "============================================================="
@@ -49,22 +49,17 @@
 #sudo mv xorg.tmp /etc/X11/xorg.conf
 
 # install some other packages
-echo "============================================================="
-echo " - Install some other packages"
-echo "============================================================="
-sudo apt -y update
-sudo apt -y upgrade
-sudo apt -y dist-upgrade
-sudo apt -y install \
-    tree \
-    vim-gtk3 \
-    xbacklight \
-    light \
-    exfat-fuse \
-    exfat-utils \
-    openssh-server
-#    shellcheck
-#    ccls
-#    cppcheck
-#    clang-format
-#    clangtidy
+#echo "============================================================="
+#echo " - Install some other packages"
+#echo "============================================================="
+#sudo apt -y update
+#sudo apt -y upgrade
+#sudo apt -y dist-upgrade
+#sudo apt -y install \
+#    tree \
+#    vim-gtk3 \
+#    xbacklight \
+#    light \
+#    exfat-fuse \
+#    exfat-utils \
+#    openssh-server
