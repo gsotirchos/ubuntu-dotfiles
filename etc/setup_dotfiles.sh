@@ -18,7 +18,7 @@ main() {
     local MACOS_DOTFILES=~/.macos-dotfiles
     if [[ ! -d "${MACOS_DOTFILES}" ]] || [[ -z "$(ls -A "${MACOS_DOTFILES}")" ]]; then
         echo -e "${BR_TEXT}\n- Couldn't locate ~./macos-dotfiles folder, cloning...${TEXT}"
-        git clone https://github.com/gsotirchos/macos-dotfiles "${MACOS_DOTFILES}"
+        git clone git@github.com:gsotirchos/macos-dotfiles.git "${MACOS_DOTFILES}"
     fi
 
     # prepare folders
