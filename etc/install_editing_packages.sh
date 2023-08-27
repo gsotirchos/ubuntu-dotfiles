@@ -95,6 +95,7 @@ main() {
     # install some other packages
     echo -e "${BR_TEXT}\n- Installing some other packages${TEXT}"
     sudo apt install -y \
+        ubuntu-restricted-extras \
         cmake \
         htop \
         tree \
