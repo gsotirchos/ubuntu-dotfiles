@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 log_fun() {
     min="0.2"
     range="$(echo "1 - ${min}" | bc)"

@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 main() {
     if [[ "$(lsb_release -si)" != "Ubuntu" ]]; then
         echo "Failed: only source this in Ubuntu."

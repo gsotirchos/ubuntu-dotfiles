@@ -1,5 +1,3 @@
-#!/bin/bash
-
 ## disable user and system zsys snapshots
 #echo "- Disabling ZFS zsys snapshots"
 #systemctl --user stop zsys-user-savestate.timer
