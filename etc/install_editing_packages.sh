@@ -8,9 +8,8 @@ main() {
     local TEXT='\033[0m'
 
     # install mambaforge
-    if ! [[ -d /opt/mambaforge ]]; then
-        local CONDA_DIR="/opt/mambaforge"
-
+    local CONDA_DIR="/opt/mambaforge"
+    if ! [[ -d "${CONDA_DIR}" ]]; then
         echo -e "${BR_TEXT}\n- Setting up Mambaforge in ${CONDA_DIR}${TEXT}"
         curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-$(uname)-$(uname -m).sh"
         sudo bash "Mambaforge-$(uname)-$(uname -m).sh" -b -p /opt/mambaforge
