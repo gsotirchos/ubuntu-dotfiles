@@ -4,8 +4,22 @@ main() {
         return 1
     fi
 
-    local BR_TEXT='\033[1;97m'
-    local TEXT='\033[0m'
+    local BR_TEXT='\e[1;97m'
+    local TEXT='\e[0m'
+
+    # install some basic packages
+    echo -e "${BR_TEXT}\n- Installing some basic packages${TEXT}"
+    sudo apt install -y \
+        ubuntu-restricted-extras \
+        software-properties-common \
+        wget \
+        curl \
+        git \
+        cmake \
+        htop \
+        tree \
+        jq \
+        doxygen
 
     # install mambaforge
     local CONDA_DIR="/opt/mambaforge"
@@ -56,9 +70,19 @@ main() {
         cppcheck \
         python3-pip \
         python3-bashate
-    sudo snap install bash-language-server --classic
-    sudo snap install shellcheck
-    sudo snap install universal-ctags
+    if command -v "snap" &> /dev/null; then
+        sudo snap install bash-language-server --classic
+        sudo snap install shellcheck
+        sudo snap install universal-ctags
+    else  # inside Docker/SingularityCE container:
+        if command -v "shellcheck" &> /dev/null; then
+            local version="v0.9.0"
+            wget -qO- "https://github.com/koalaman/shellcheck/releases/download/${version}/shellcheck-${version}.linux.$(arch).tar.xz" | tar -xJv
+            sudo cp "shellcheck-${version}/shellcheck" /usr/bin
+            rm "shellcheck-${version}"
+        fi
+        sudo apt install universal-ctags
+    fi
     #mamba install -y --name editing \
     #    mamba-bash-completion \
     sudo pip install \
@@ -68,11 +92,11 @@ main() {
         autopep8 \
         isort
 
-    if [[ "$(lsb_release -sc)" == "focal" ]] && [[ "$(arch)" == "aarch64" ]]; then
-        # install shfmt manually on arm64 Focal
+    # install shfmt manually on arm64
+    if [[ "$(arch)" == "aarch64" ]]; then
         curl http://ports.ubuntu.com/pool/universe/s/shfmt/shfmt_3.4.3-1_arm64.deb --output temp.deb
         sudo dpkg -i temp.deb
-        rm temp.debcode linters and fixers
+        rm temp.deb
     else
         sudo snap install shfmt
     fi
@@ -88,17 +112,6 @@ main() {
     sudo add-apt-repository -y ppa:jonathonf/vim
     sudo apt update && sudo apt upgrade -y
     sudo apt install -y vim-gtk # has clipboard support
-
-    # install some other packages
-    echo -e "${BR_TEXT}\n- Installing some other packages${TEXT}"
-    sudo apt install -y \
-        ubuntu-restricted-extras \
-        curl \
-        cmake \
-        htop \
-        tree \
-        jq \
-        doxygen
 
     echo -e "${BR_TEXT}\n- Finished${TEXT}"
 }
