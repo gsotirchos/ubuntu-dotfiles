@@ -74,7 +74,7 @@ main() {
         sudo snap install bash-language-server --classic
         sudo snap install shellcheck
         sudo snap install universal-ctags
-    else  # inside Docker/SingularityCE container:
+    else # inside Docker/SingularityCE container:
         if command -v "shellcheck" &> /dev/null; then
             local version="v0.9.0"
             wget -qO- "https://github.com/koalaman/shellcheck/releases/download/${version}/shellcheck-${version}.linux.$(arch).tar.xz" | tar -xJv
