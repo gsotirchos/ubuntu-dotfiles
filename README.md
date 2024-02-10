@@ -1,5 +1,5 @@
 # Ubuntu dotfiles
-My dotfiles for my Ubuntu computers(s).
+My dotfiles for my Ubuntu computer(s).
 
 ## Installation
 Simply clone this repo in the user's home directory and source the [`etc/setup_dotfiles.sh`](etc/setup_dotfiles.sh) script. This repo works in tandem with my [macos-dotfiles](https://github.com/gsotirchos/macos-dotfiles) repo, which should be present in `./.macos-dotfiles` and will be cloned there by the setup script.
