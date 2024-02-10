@@ -17,7 +17,8 @@ main() {
     local MACOS_DOTFILES=~/.macos-dotfiles
     if [[ ! -d "${MACOS_DOTFILES}" ]] || [[ -z "$(ls -A "${MACOS_DOTFILES}")" ]]; then
         echo -e "${BR_TEXT}\n- Couldn't locate ~./macos-dotfiles folder, cloning...${TEXT}"
-        git clone git@github.com:gsotirchos/macos-dotfiles.git "${MACOS_DOTFILES}"
+        git clone git@github.com:gsotirchos/macos-dotfiles.git "${MACOS_DOTFILES}" ||
+            git clone https://github.com/gsotirchos/macos-dotfiles.git "${MACOS_DOTFILES}"
     fi
 
     # prepare folders
@@ -38,10 +39,12 @@ main() {
     ln -sfv "${DOTFILES}/fonts/"*/*.otb ~/.local/share/fonts
 
     # enable bitmap fonts
-    echo -e "${BR_TEXT}\n- Enable bitmap fonts & reconfigure fontconfig${TEXT}"
-    sudo rm /etc/fonts/conf.d/70-no-bitmaps.conf
-    sudo ln -sfv /etc/fonts/conf.avail/70-yes-bitmaps.conf /etc/fonts/conf.d
-    sudo dpkg-reconfigure fontconfig
+    if [[ -n "$(groups | grep -w "sudo|admin")" ]]; then
+        echo -e "${BR_TEXT}\n- Enable bitmap fonts & reconfigure fontconfig${TEXT}"
+        sudo rm /etc/fonts/conf.d/70-no-bitmaps.conf
+        sudo ln -sfv /etc/fonts/conf.avail/70-yes-bitmaps.conf /etc/fonts/conf.d
+        sudo dpkg-reconfigure fontconfig
+    fi
 
     echo -e "${BR_TEXT}\n- Don't forget to append the following to ~/.profile${TEXT}:"
     echo "if [[ -f ~/.bashrc ]]; then"
