@@ -21,19 +21,22 @@ main() {
         jq \
         doxygen
 
-    # install mambaforge
-    local CONDA_DIR="/opt/mambaforge"
+    # install miniforge
+    local CONDA_DIR="/opt/miniforge"
+    local MINIFORGE_SCRIPT="Miniforge3-$(uname)-$(uname -m).sh"
     if ! [[ -d "${CONDA_DIR}" ]]; then
-        echo -e "${BR_TEXT}\n- Setting up Mambaforge in ${CONDA_DIR}${TEXT}"
-        curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-$(uname)-$(uname -m).sh"
-        sudo bash "Mambaforge-$(uname)-$(uname -m).sh" -b -p /opt/mambaforge
-        sudo chmod -R o+w /opt/mambaforge # allow write access for all users
-        rm "Mambaforge-$(uname)-$(uname -m).sh"
+        echo -e "${BR_TEXT}\n- Setting up Miniforge in ${CONDA_DIR}${TEXT}"
+        curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/${MINIFORGE_SCRIPT}"
+        sudo bash "${MINIFORGE_SCRIPT}" -b -p /opt/miniforge
+        sudo chmod -R o+w /opt/miniforge # allow write access for all users
+        rm "${MINIFORGE_SCRIPT}"
         export MAMBA_NO_BANNER=1
         source "${CONDA_DIR}/etc/profile.d/conda.sh"
         source "${CONDA_DIR}/etc/profile.d/mamba.sh"
+        mamba update --name base conda -y
         mamba update --name base --all -y
         #mamba create --name editing -y
+        mamba clean --all -y
     fi
 
     # remove old clang
