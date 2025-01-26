@@ -90,6 +90,7 @@ main() {
     #    mamba-bash-completion \
     sudo pip install \
         cmakelang \
+        pylint \
         python-lsp-server \
         python-lsp-ruff \
         autopep8 \
