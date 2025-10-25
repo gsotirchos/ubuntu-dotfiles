@@ -3,22 +3,22 @@
 
 main() {
     # text styling
-    local BR_TEXT='\033[1;97m'
-    local TEXT='\033[0m'
+    local bright_style='\033[1;97m'
+    local normal_style='\033[0m'
 
     # dotfiles path
-    local DOTFILES="$(
+    local dotfiles="$(
         builtin cd "$(
             realpath "$(dirname "$(realpath "${BASH_SOURCE[0]}")")/.."
         )" > /dev/null && pwd
     )"
 
     # macos dotfiles path
-    local MACOS_DOTFILES=~/.macos-dotfiles
-    if [[ ! -d "${MACOS_DOTFILES}" ]] || [[ -z "$(ls -A "${MACOS_DOTFILES}")" ]]; then
-        echo -e "${BR_TEXT}\n- Couldn't locate ~./macos-dotfiles folder, cloning...${TEXT}"
-        git clone git@github.com:gsotirchos/macos-dotfiles.git "${MACOS_DOTFILES}" ||
-            git clone https://github.com/gsotirchos/macos-dotfiles.git "${MACOS_DOTFILES}"
+    local macos_dotfiles=~/.macos-dotfiles
+    if [[ ! -d "${macos_dotfiles}" ]] || [[ -z "$(ls -A "${macos_dotfiles}")" ]]; then
+        echo -e "${bright_style}\n- Couldn't locate ~./macos-dotfiles folder, cloning...${normal_style}"
+        git clone git@github.com:gsotirchos/macos-dotfiles.git "${macos_dotfiles}" ||
+            git clone https://github.com/gsotirchos/macos-dotfiles.git "${macos_dotfiles}"
     fi
 
     # prepare folders
@@ -27,26 +27,26 @@ main() {
     mkdir -vp ~/.local/share/fonts
 
     # TODO: replace this mess with a "macos-dotfiles submodule" & symlinks
-    echo -e "${BR_TEXT}\n- Setting up dotfiles from ~./macos-dotfiles...${TEXT}"
-    source "${MACOS_DOTFILES}/etc/setup_dotfiles.sh"
+    echo -e "${bright_style}\n- Setting up dotfiles from ~./macos-dotfiles...${normal_style}"
+    source "${macos_dotfiles}/etc/setup_dotfiles.sh"
     rm ~/.bash_profile
 
     # make soft symlinks
-    echo -e "${BR_TEXT}\n- Symlinking dotfiles (${DOTFILES})${TEXT}"
-    ln -sfv "${DOTFILES}/config/gtk-3.0/gtk.css" ~/.config/gtk-3.0/gtk.css
-    ln -sfv "${DOTFILES}/config/redshift.conf" ~/.config/redshift.conf
-    ln -sfv "${DOTFILES}/config/autostart/"* ~/.config/autostart
-    ln -sfv "${DOTFILES}/fonts/"*/*.otb ~/.local/share/fonts
+    echo -e "${bright_style}\n- Symlinking dotfiles (${dotfiles})${normal_style}"
+    ln -sfv "${dotfiles}/config/gtk-3.0/gtk.css" ~/.config/gtk-3.0/gtk.css
+    ln -sfv "${dotfiles}/config/redshift.conf" ~/.config/redshift.conf
+    ln -sfv "${dotfiles}/config/autostart/"* ~/.config/autostart
+    ln -sfv "${dotfiles}/fonts/"*/*.otb ~/.local/share/fonts
 
     # enable bitmap fonts
-    if [[ -n "$(groups | grep -w "sudo|admin")" ]]; then
-        echo -e "${BR_TEXT}\n- Enable bitmap fonts & reconfigure fontconfig${TEXT}"
-        sudo rm /etc/fonts/conf.d/70-no-bitmaps.conf
-        sudo ln -sfv /etc/fonts/conf.avail/70-yes-bitmaps.conf /etc/fonts/conf.d
-        sudo dpkg-reconfigure fontconfig
-    fi
+    #if [[ -n "$(groups | grep -w "sudo|admin")" ]]; then
+    #    echo -e "${bright_style}\n- Enable bitmap fonts & reconfigure fontconfig${normal_style}"
+    #    sudo rm /etc/fonts/conf.d/70-no-bitmaps.conf
+    #    sudo ln -sfv /etc/fonts/conf.avail/70-yes-bitmaps.conf /etc/fonts/conf.d
+    #    sudo dpkg-reconfigure fontconfig
+    #fi
 
-    echo -e "${BR_TEXT}\n- Don't forget to append the following to ~/.profile${TEXT}:"
+    echo -e "${bright_style}\n- Don't forget to append the following to ~/.profile${normal_style}:"
     echo "if [[ -f ~/.bashrc ]]; then"
     echo "    source ~/.bashrc"
     echo "fi"
