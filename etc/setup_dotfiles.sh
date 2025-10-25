@@ -29,27 +29,21 @@ main() {
     # TODO: replace this mess with a "macos-dotfiles submodule" & symlinks
     echo -e "${bright_style}\n- Setting up dotfiles from ~./macos-dotfiles...${normal_style}"
     source "${macos_dotfiles}/etc/setup_dotfiles.sh"
-    rm ~/.bash_profile
 
     # make soft symlinks
     echo -e "${bright_style}\n- Symlinking dotfiles (${dotfiles})${normal_style}"
     ln -sfv "${dotfiles}/config/gtk-3.0/gtk.css" ~/.config/gtk-3.0/gtk.css
     ln -sfv "${dotfiles}/config/redshift.conf" ~/.config/redshift.conf
     ln -sfv "${dotfiles}/config/autostart/"* ~/.config/autostart
-    ln -sfv "${dotfiles}/fonts/"*/*.otb ~/.local/share/fonts
+    #ln -sfv "${dotfiles}/fonts/"*/*.otb ~/.local/share/fonts
 
-    # enable bitmap fonts
+    ## enable bitmap fonts
     #if [[ -n "$(groups | grep -w "sudo|admin")" ]]; then
     #    echo -e "${bright_style}\n- Enable bitmap fonts & reconfigure fontconfig${normal_style}"
     #    sudo rm /etc/fonts/conf.d/70-no-bitmaps.conf
     #    sudo ln -sfv /etc/fonts/conf.avail/70-yes-bitmaps.conf /etc/fonts/conf.d
     #    sudo dpkg-reconfigure fontconfig
     #fi
-
-    echo -e "${bright_style}\n- Don't forget to append the following to ~/.profile${normal_style}:"
-    echo "if [[ -f ~/.bashrc ]]; then"
-    echo "    source ~/.bashrc"
-    echo "fi"
 }
 
 main "$@"
