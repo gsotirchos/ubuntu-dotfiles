@@ -2,4 +2,5 @@
 ${HOME}/.bin
 ${HOME}/.local/bin
 ${HOME}/.dotfiles/bin
+${HOME}/.opencode/bin
 /usr/lib/llvm*/bin
